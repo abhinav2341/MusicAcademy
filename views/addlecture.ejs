@@ -1,0 +1,467 @@
+<!-- page for adding lesson to course or update -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="/">
+
+    <title>Music Academy</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/shop-homepage.css" rel="stylesheet">
+    <!-- <link href="css/argon-design-system.css?v=1.2.0" rel="stylesheet" /> -->
+    <link href="fontawesome-free/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lobster&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/instructor" style="font-family: 'Dancing Script', cursive;">Music Academy</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/createcourse">
+                            Create Course
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <%if(userInfo.firstName!=null){%>
+                            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <%=userInfo.firstName%>
+                            </a>
+                            <%}else{%>
+                                <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Profile
+                                </a>
+                                <%}%>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/profile">My Profile</a>
+                                        <a class="dropdown-item" href="/instructormycourse">My Courses</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="/logout" id="LogOutBtn">Logout</a>
+                                    </div>
+                                    <!-- <button class="btn" id="LogOutBtn">Logout</button> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Page Content -->
+    <div class="container" style="min-height: 83vh;">
+        <div class="row" style="height: 10%; width: 100%; background-color: white;">
+            <div class="col col-lg-8 col-md-8">
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row display-3" style="width: 100%;">
+                    <%= courseInfo.courseName %>
+                </div>
+                <div class="row lead" style="width: 100%;">
+                    <%= courseInfo.courseDescription %>
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row h4" style="width: 100%;">
+                    <small>Created By: <u><%= courseInfo.instructorName %></u></small>
+                </div>
+                <div class="row h4" style="width: 100%;">
+                    <div class="col col-lg-6 col-md-6 text-left" style="padding: 0px;">
+                        <span class="text-left"><small>Language: <em><%= courseInfo.courseLanguage %></em></small></span>
+                    </div>
+                    <div class="col col-lg-6 col-md-6 text-right">
+                        <span class="text-right"><small>Price: <em>&#8377 <%= courseInfo.coursePrice %></em></small></span>
+                    </div>
+                </div>
+                <div class="row h4" style="width: 100%;">
+                    <div class="col col-lg-6 col-md-6 text-left" style="padding: 0px;">
+                        <span class="text-left"><small>Difficulty: <em><%= courseInfo.courseDifficulty %></em></small></span>
+                    </div>
+                    <div class="col col-lg-6 col-md-6 text-right">
+                        <span class="text-right"><small>Duration: <em><%= courseInfo.courseDuration %> hrs</em></small></span>
+                    </div>
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
+
+            </div>
+            <div class="col col-lg-4 col-md-4" style="text-align: center;padding: 1rem;">
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
+                <%if(courseInfo.courseThumbnailUrl!=null){%>
+                    <div class="row">
+                        <img src="<%=courseInfo.courseThumbnailUrl%>" alt="image here" class="img-thumbnail" style="max-width:80%;width: 100%;">
+                    </div>
+                    <%}else{%>
+                        <div class="row">
+                            <img src="https://image.flaticon.com/icons/svg/194/194936.svg" alt="image here" class="img-thumbnail" style="width: 100%;">
+                        </div>
+                        <%}%>
+
+            </div>
+
+        </div>
+        <div class="row" style="height: 90%;width: 100% ; margin-top: 2%;">
+            <div class="col-12" id="LectureSection">
+                <div class="row h3">
+                    <div class="col col-6 text-left" style="padding-left:0px ;">
+                        <%=lesson.lessonInfo.lessonName%>
+                    </div>
+                    <div class="col col-6 text-right">
+                        <!-- buttons here -->
+                    </div>
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
+
+                <% for(var i=0;i< lesson.lessonInfo.noOfLectures;i++){ %>
+                    <div class="row">
+                        <div class="card" style="width: 100%;">
+                            <%if(lectures[i]!=null){%>
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col col-6 lead">
+                                            Lecture
+                                            <%=i+1%>
+                                        </div>
+                                        <div class="col col-6 text-right">
+                                            <button class="btn btn-primary EditLectureBtn" type="button" data-toggle="modal" data-target="#EditLectureModal" id="<%=i+1%>">Edit Lecture</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-title h5" id="lectureName<%=i+1%>">
+                                        <%= lectures[i].lectureInfo.lectureName %>
+                                    </div>
+                                    <span hidden id="lectureId<%=i+1%>"><%=lectures[i].lectureId%></span>
+                                    <div class="card-text">
+                                        <ul style="list-style-type:circle">
+                                            <li id="lectureDescription<%=i+1%>">
+                                                <%= lectures[i].lectureInfo.lectureDescription %>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <%if( lectures[i].lectureInfo.lectureVideoUrl !=null ){%>
+                                        <div class="card-text">
+                                            <ul style="list-style-type:none">
+                                                <li>
+                                                    <button class="btn btn-primary UpdateVideoBtn" type="button" id="<%=i+1%>">Update Video</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-text" id="UpdateVideoCardText<%=i+1%>" hidden>
+                                            <ul style="list-style-type:none">
+                                                <li>
+                                                    <form method="POST" action="/uploadlecturevideodb/<%=courseId%>/<%=lesson.lessonId%>/<%=lectures[i].lectureId%>" id="UploadLectureForm">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputPassword1">Upload Lecture Video</label></br>
+                                                            <input type="file" class="UploadLectureVideo" name="LectureVideo" id="<%=i+1%>" accept="video/*" required>
+                                                            <input type="hidden" name="LectureVideoUrl" id="LectureVideoUrl<%=i+1%>" value="">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="progress" id="progress<%=i+1%>" hidden>
+                                                                <div class="progress-bar" id="progress-bar<%=i+1%>" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button class="btn btn-primary UploadLectureBtn" type="submit" id="<%=i+1%>" hidden>Upload</button>
+                                                        </div>
+                                                    </form>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        <%}else{%>
+                                            <div class="card-text">
+                                                <ul style="list-style-type:none">
+                                                    <li>
+                                                        <form method="POST" action="/uploadlecturevideodb/<%=courseId%>/<%=lesson.lessonId%>/<%=lectures[i].lectureId%>" id="UploadLectureForm">
+                                                            <div class="form-group">
+                                                                <label for="exampleInputPassword1">Upload Lecture Video</label></br>
+                                                                <input type="file" class="UploadLectureVideo" name="LectureVideo" id="<%=i+1%>" accept="video/*" required>
+                                                                <input type="hidden" name="LectureVideoUrl" id="LectureVideoUrl<%=i+1%>">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="progress" id="progress<%=i+1%>" hidden>
+                                                                    <div class="progress-bar" id="progress-bar<%=i+1%>" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <button class="btn btn-primary UploadLectureBtn" type="submit" id="<%=i+1%>" hidden>Upload</button>
+                                                            </div>
+                                                        </form>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <%}%>
+                                </div>
+                                <%}else{%>
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col col-6 lead">
+                                                Lecture
+                                                <%=i+1%>
+                                            </div>
+                                            <div class="col col-6 text-right">
+                                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#AddLectureModal">Add Lecture</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%}%>
+
+                        </div>
+                    </div>
+
+                    <div class="row">&nbsp;</div>
+                    <%}%>
+
+                        <div class="row">&nbsp;</div>
+            </div>
+        </div>
+        <!-- Add Lecture Modal  -->
+        <div class="modal fade" id="AddLectureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Add Lecture</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/addlecturedb/<%=courseId%>/" id="AddLectureForm">
+                            <div class="form-group">
+                                <input type="hidden" id="LessonId" name="LessonId" class="form-control" value="<%=lesson.lessonId%>" required>
+                                <!-- <input type="hidden" name="LectureName" class="form-control" id="LectureName" aria-describedby="LectureNameHelp" required> -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="LessonName">Lecture Name</label>
+                                <input type="text" name="LectureName" class="form-control" id="AddLectureName" aria-describedby="LectureNameHelp" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Lecture Description</label>
+                                <textarea class="form-control" name="LectureDescription" id="AddLectureDescription" rows="auto" required></textarea>
+                            </div>
+
+
+                            <div class="form-group">
+                                <strong id="res"></strong>
+                            </div>
+                            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="AddLessonBtn">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Edit Lecture Modal  -->
+        <div class="modal fade" id="EditLectureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Lecture</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/editlecturedb/<%=courseId%>/" id="AddLectureForm">
+                            <div class="form-group">
+                                <input type="hidden" id="LessonId" name="LessonId" class="form-control" value="<%=lesson.lessonId%>" required>
+                                <input type="hidden" id="EditLectureId" name="EditLectureId" class="form-control" value="" required>
+                                <!-- <input type="hidden" name="LectureName" class="form-control" id="LectureName" aria-describedby="LectureNameHelp" required> -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="LessonName">Lecture Name</label>
+                                <input type="text" name="EditLectureName" class="form-control" id="EditLectureName" aria-describedby="LectureNameHelp" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Lecture Description</label>
+                                <textarea class="form-control" name="EditLectureDescription" id="EditLectureDescription" rows="auto" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <strong id="res"></strong>
+                            </div>
+                            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="EditLessonBtn">Edit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Music Academy 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-storage.js"></script>
+
+    <!-- <script id="form-actions">
+        $('.AddLectureLink').click(function() {
+            console.log('addLecture ');
+            var LessonId = $(this).attr("id");
+            console.log(LessonId);
+            $('#LessonId').val(LessonId);
+            // console.log(LectureLinkId + "Input");
+            // var LessonId = $(LectureLinkId + "Input").val();
+            // console.log("LessonId " + LessonId);
+        });
+    </script> -->
+    <script>
+        // console.log("index.ejs");
+        var firebaseConfig = {
+            apiKey: "AIzaSyAgBh_SBTl4Wc8ugH2EDchLJRqKnO2dAJI",
+            authDomain: "music-academy-2341.firebaseapp.com",
+            databaseURL: "https://music-academy-2341.firebaseio.com",
+            projectId: "music-academy-2341",
+            storageBucket: "music-academy-2341.appspot.com",
+            messagingSenderId: "379322040304",
+            appId: "1:379322040304:web:e171f5a89796acc871e735",
+            measurementId: "G-2MHG9QDRM3"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        $('.UploadLectureVideo').change(function() {
+            console.log("upload change");
+            var file = $(this).prop('files')[0];
+            var id = $(this).attr("id");
+            var lectureId = $('#lectureId' + id).html().trim();
+            var storageRef = firebase.storage().ref();
+            var filelocation = 'app/user/instructor/<%-userId%>/courses/<%-courseId%>/lessons/<%-lesson.lessonId%>/lectures/' + lectureId + '/' + file.name;
+
+            //upload file
+            var task = storageRef.child(filelocation).put(file);
+            //update progress
+
+
+            task.on('state_changed',
+                function progress(snapshot) {
+
+                    switch (snapshot.state) {
+                        case firebase.storage.TaskState.PAUSED: // or 'paused'
+                            console.log('Upload is paused');
+                            break;
+                        case firebase.storage.TaskState.RUNNING: // or 'running'
+                            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log("#progress" + id);
+                            $("#progress" + id).attr("hidden", false);
+                            $("#progress-bar" + id).css("width", progress + "%");
+                            $("#progress-bar" + id).html(progress.toFixed(1) + "%");
+                            console.log('Upload is ' + progress.toFixed(1) + '% done');
+                            console.log('Upload is running');
+                            break;
+                    }
+                },
+                function(error) {
+
+                    // A full list of error codes is available at
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+                            // User doesn't have permission to access the object
+                            console.log('Unauthorized User Accesing Storage');
+                            break;
+
+                        case 'storage/canceled':
+                            // User canceled the upload
+                            console.log('Upload Canceled');
+                            break;
+                        case 'storage/unknown':
+                            // Unknown error occurred, inspect error.serverResponse
+                            break;
+                    }
+                },
+                function() {
+                    // Upload completed successfully, now we can get the download URL
+                    task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                        console.log('File available at', downloadURL);
+                        $('#LectureVideoUrl' + id).val(downloadURL);
+                        $('.UploadLectureBtn').attr("hidden", false);
+                    });
+                });
+        });
+
+        $('.UpdateVideoBtn').click(function() {
+            var id = $(this).attr("id");
+            $(this).attr("hidden", true);
+            $("#UpdateVideoCardText" + id).attr("hidden", false);
+        });
+
+        $('.EditLectureBtn').click(function() {
+            console.log('Edit Lecture clicked');
+            var id = $(this).attr("id");
+            var lectureId = $('#lectureId' + id).html().trim();
+            var lectureName = $('#lectureName' + id).html().trim();
+            var lectureDescription = $('#lectureDescription' + id).html().trim();
+            $('#EditLectureId').val(lectureId);
+            $('#EditLectureName').val(lectureName);
+            $('#EditLectureDescription').val(lectureDescription);
+            console.log(id + " " + lectureId + " " + lectureName + " " + lectureDescription);
+        });
+
+        $('#LogOutBtn').click(function() {
+            console.log('Log Out clicked');
+            firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+                window.location.replace("/logout");
+            }).catch(function(error) {
+                // An error happened.
+            });
+        });
+    </script>
+
+</body>
+
+</html>

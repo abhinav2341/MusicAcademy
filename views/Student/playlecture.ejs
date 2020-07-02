@@ -1,0 +1,388 @@
+<!-- page for adding lesson to course or update -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="/">
+
+    <title>Music Academy</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/shop-homepage.css" rel="stylesheet">
+    <!-- <link href="css/argon-design-system.css?v=1.2.0" rel="stylesheet" /> -->
+    <link href="fontawesome-free/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lobster&display=swap" rel="stylesheet">
+
+    <style>
+        #commentBox {
+            width: 100%;
+            border: none;
+            margin-left: 2%;
+            margin-right: 2%;
+        }
+        
+        #commentBox:focus {
+            border-bottom: 2px solid black!important;
+            outline: none;
+        }
+        
+        .card:hover {
+            background-color: whitesmoke;
+            border-bottom: 1px solid grey!important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/student" style="font-family: 'Dancing Script', cursive;">Music Academy</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <%if(userInfo.firstName!=null){%>
+                            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <%=userInfo.firstName%>
+                            </a>
+                            <%}else{%>
+                                <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Profile
+                                </a>
+                                <%}%>
+                                    <div class="dropdown-menu">
+                                        <!-- <a class="dropdown-item" href="./">My Courses</a> -->
+                                        <a class="dropdown-item" href="/profile">My Profile</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="/logout" id="LogOutBtn">Logout</a>
+                                        <!-- <a class="dropdown-item" href="#">Separated link</a> -->
+                                    </div>
+                                    <!-- <button class="btn" id="LogOutBtn">Logout</button> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Fluid jumbotron</h1>
+            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+        </div>
+    </div> -->
+    <!-- Page Content -->
+    <div class="container" style="min-height: 83vh;padding: 1%;">
+        <div class="row" style="height: 50%; width: 100%;  margin-top: 2%;background-color:white;">
+
+            <div class="embed-responsive embed-responsive-21by9">
+                <iframe class="embed-responsive-item" src="<%=lecture.lectureInfo.lectureVideoUrl%>" allowfullscreen></iframe>
+            </div>
+            <div class="row" style="width: 100%;margin-left: 1px;">
+                <div class="col-lg-6 col-md-12">
+                    <h3 style="margin-left: 4%;margin-top: 3%;">
+                        <%=lecture.lectureInfo.lectureName%>
+                    </h3>
+                </div>
+                <hr style="width: 100%;margin-left: 1px;">
+                <ul style="width: 100%;padding-left: 7%;list-style-type: circle;">
+                    <li>
+                        <%=lecture.lectureInfo.lectureDescription%>
+                    </li>
+                </ul>
+                <hr style="width: 100%;margin-left: 1px;">
+            </div>
+            <div class="row" style="width: 100%;padding: 1%;">
+                <div class="row" style="width: 100%;margin-left: 1px;">
+                    <input type="text" name="commentBox" id="commentBox" placeholder="Ask Doubt....">
+                    <input type="hidden" name="courseId" id="courseId" value="<%=courseId%>">
+                    <input type="hidden" name="lessonId" id="lessonId" value="<%=lessonId%>">
+                    <input type="hidden" name="lectureId" id="lectureId" value="<%=lecture.lectureId%>">
+                    <input type="hidden" name="uid" id="uid" value="<%=uid%>">
+                    <input type="hidden" name="firstName" id="firstName" value="<%=userInfo.firstName%>">
+                    <input type="hidden" name="lastName" id="lastName" value="<%=userInfo.lastName%>">
+                    <div class="row text-right" style="width: 100%;margin-top: 1.5%;">
+                        <div class="col-lg-6">
+                            &nbsp;
+                        </div>
+                        <div class="col-lg-6 col-md-12 col" id="CommentBtnGroup" hidden>
+                            <button class="btn btn-danger" type="button" id="cancelBtn">Cancel</button>
+                            <button class="btn btn-primary" type="button" id="commentBtn">Comment</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="width: 100%;margin-left: 1px;">
+                    <div class="col-6 text-left">
+                        <h3>Discussions</h3>
+
+                        <hr style=" width: 50%;margin-left: 1px; ">
+                    </div>
+                </div>
+                <!-- <div class="row " style="width: 100%;margin-left: 1px; " id='staticCommentRow' hidden>
+                    <div class="card " style="width: 100%;margin-left: 1%;border: none; ">
+                        <div class="card-body ">
+                            <h5 class="card-title " id='staticCommentName'>
+
+                            </h5>
+                            <small id='staticCommentTime'></small>
+                            <p class="card-text " id='staticComment' style="font-size: 110%;text-align: justify;font-weight: 100;text-transform: capitalize;">
+
+                            </p>
+                        </div>
+                    </div>
+                </div> -->
+                <div id="staticCommentRow0"></div>
+                <div id="dynamicCommentRow0"></div>
+                <!-- <div class="row " style="width: 100%;margin-left: 1px; ">
+                    <div class="card " style="width: 100%;margin-left: 1%;border: none; ">
+                        <div class="card-body ">
+                            <h5 class="card-title ">
+                                Abhinav
+                            </h5>
+                            <small>time</small>
+                            <p class="card-text " style="font-size: 110%;text-align: justify;font-weight: 100;text-transform: capitalize;">
+                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam, impedit modi? Fugit placeat deleniti tenetur dolorum ea illum velit tempora nihil. Optio dolore veniam est, soluta excepturi quaerat reiciendis dicta! Lorem, ipsum dolor sit amet consectetur
+                                adipisicing elit. Quis facere, aperiam distinctio alias, aut exercitationem impedit nam perferendis suscipit voluptatum architecto voluptate cumque dignissimos qui quas velit ea quaerat deleniti! Lorem ipsum dolor sit amet
+                                consectetur, adipisicing elit. Architecto magnam voluptatum, nemo molestias, maiores atque itaque sit, neque illo excepturi aliquid porro temporibus laboriosam suscipit assumenda repudiandae pariatur ipsum officiis.
+                            </p>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="row " style="height: auto; min-height-50%;width: 100% ; margin-top: 2%; ">
+
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark ">
+        <div class="container ">
+            <p class="m-0 text-center text-white ">Copyright &copy; Music Academy 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js "></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js "></script>
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js "></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js "></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js "></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-storage.js "></script>
+
+    <!-- <script src="js/test.js"></script> -->
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAgBh_SBTl4Wc8ugH2EDchLJRqKnO2dAJI",
+            authDomain: "music-academy-2341.firebaseapp.com",
+            databaseURL: "https://music-academy-2341.firebaseio.com",
+            projectId: "music-academy-2341",
+            storageBucket: "music-academy-2341.appspot.com",
+            messagingSenderId: "379322040304",
+            appId: "1:379322040304:web:e171f5a89796acc871e735",
+            measurementId: "G-2MHG9QDRM3"
+        };
+
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+
+        function fetchComments() {
+            console.log('Loaded');
+            var db = firebase.firestore();
+            var courseId = "<%-courseId%>"; //$('#courseId').val();
+            var lessonId = "<%-lessonId%>"; //$('#lessonId').val();
+            var lectureId = "<%-lecture.lectureId%>"; //$('#lectureId').val();
+            let CommentRef = db.collection('Courses').doc(courseId).collection('Lessons').doc(lessonId).collection('Lectures').doc(lectureId).collection('Comments');
+
+            CommentRef.orderBy('timestamp').limit(10).get().then(function(querySnapshot) {
+                var i = 0;
+                querySnapshot.forEach(function(doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data().comment);
+                    var dynamicCommentStructure = '<div class="row " style="width: 100%;margin-left: 1px; " id="dynamicCommentRow' + (i + 1) + '" >' +
+                        '<div class="card " style="width: 100%;margin-left: 1%;border: none; ">' +
+                        '<div class="card-body ">' +
+                        '<h5 class="card-title " id="dynamicCommentName' + (i + 1) + '">' +
+                        '</h5>' +
+                        '<small id="dynamicCommentTime' + (i + 1) + '"></small>' +
+                        '<p class="card-text " id="dynamicComment' + (i + 1) + '" style="font-size: 110%;text-align: justify;font-weight: 100;text-transform: capitalize;">' +
+                        '</p>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                    console.log(doc.data().name + " " + doc.data().comment + " " + doc.data().commentDate)
+                    var options = {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    };
+                    // var date = new Date(doc.data().timestamp).toUTCString();
+                    // var formatDate = date.toLocaleDateString("en-US", options)
+                    $('#dynamicCommentRow' + i).after(dynamicCommentStructure);
+                    i++;
+                    $('#dynamicCommentName' + i).html(doc.data().name);
+                    $('#dynamicComment' + i).html(doc.data().comment);
+                    $('#dynamicCommentTime' + i).html(doc.data().commentDate);
+                });
+            });
+
+        }
+
+        $(fetchComments);
+        // $(function() {
+        //     console.log('Loaded');
+        //     var db = firebase.firestore();
+        //     var courseId = "<%-courseId%>"; //$('#courseId').val();
+        //     var lessonId = "<%-lessonId%>"; //$('#lessonId').val();
+        //     var lectureId = "<%-lecture.lectureId%>"; //$('#lectureId').val();
+        //     let CommentRef = db.collection('Courses').doc(courseId).collection('Lessons').doc(lessonId).collection('Lectures').doc(lectureId).collection('Comments');
+
+        //     CommentRef.orderBy('timestamp').limit(10).get().then(function(querySnapshot) {
+        //         var i = 0;
+        //         querySnapshot.forEach(function(doc) {
+        //             // doc.data() is never undefined for query doc snapshots
+        //             console.log(doc.id, " => ", doc.data().comment);
+        //             var commentStructure = '<div class="row " style="width: 100%;margin-left: 1px; " id="dynamicCommentRow' + (i + 1) + '" >' +
+        //                 '<div class="card " style="width: 100%;margin-left: 1%;border: none; ">' +
+        //                 '<div class="card-body ">' +
+        //                 '<h5 class="card-title " id="dynamicCommentName' + (i + 1) + '">' +
+        //                 '</h5>' +
+        //                 '<small id="dynamicCommentTime' + (i + 1) + '"></small>' +
+        //                 '<p class="card-text " id="dynamicComment' + (i + 1) + '" style="font-size: 110%;text-align: justify;font-weight: 100;text-transform: capitalize;">' +
+        //                 '</p>' +
+        //                 '</div>' +
+        //                 '</div>' +
+        //                 '</div>';
+        //             console.log(doc.data().name + " " + doc.data().comment + " " + doc.data().commentDate)
+        //             var options = {
+        //                 year: 'numeric',
+        //                 month: 'long',
+        //                 day: 'numeric'
+        //             };
+        //             // var date = new Date(doc.data().timestamp).toUTCString();
+        //             // var formatDate = date.toLocaleDateString("en-US", options)
+        //             $('#dynamicCommentRow' + i).after(commentStructure);
+        //             i++;
+        //             $('#dynamicCommentName' + i).html(doc.data().name);
+        //             $('#dynamicComment' + i).html(doc.data().comment);
+        //             $('#dynamicCommentTime' + i).html(doc.data().commentDate);
+
+        //         });
+        //     });
+
+        // });
+
+        $('#commentBtn').click(function() {
+            console.log('comment clicled');
+            var comment = $('#commentBox').val();
+            if (comment != '') {
+                console.log("COMMENT " + comment);
+                var i = 0;
+                var staticCommentStructure = '<div class="row " style="width: 100%;margin-left: 1px; " id="staticCommentRow' + (i + 1) + '" >' +
+                    '<div class="card " style="width: 100%;margin-left: 1%;border: none; ">' +
+                    '<div class="card-body ">' +
+                    '<h5 class="card-title " id="staticCommentName' + (i + 1) + '">' +
+                    '</h5>' +
+                    '<small id="staticCommentTime' + (i + 1) + '"></small>' +
+                    '<p class="card-text " id="staticComment' + (i + 1) + '" style="font-size: 110%;text-align: justify;font-weight: 100;text-transform: capitalize;">' +
+                    '</p>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+                $('#staticCommentRow0').after(staticCommentStructure);
+                i++;
+                var db = firebase.firestore();
+                var courseId = $('#courseId').val();
+                var lessonId = $('#lessonId').val();
+                var lectureId = $('#lectureId').val();
+                var uid = $('#uid').val();
+                var userName = $('#firstName').val() + " " + $('#lastName').val();
+                console.log("courseId " + courseId);
+                console.log("lessonId " + lessonId);
+                console.log("lectureId " + lectureId);
+                console.log("uid " + uid);
+                console.log("userName " + userName);
+                var options = {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                };
+                var today = new Date();
+                var formatToday = today.toLocaleDateString("en-US", options)
+                var data = {
+                    uid: uid,
+                    name: userName,
+                    comment: comment,
+                    timestamp: firebase.firestore.Timestamp.fromDate(new Date("December 10, 1815")),
+                    commentDate: formatToday
+                }
+                console.log(data);
+                let CommentRef = db.collection('Courses').doc(courseId).collection('Lessons').doc(lessonId).collection('Lectures').doc(lectureId).collection('Comments');
+                CommentRef.add(data)
+                    .then(function(docRef) {
+                        console.log("Comment added with ID: ", docRef.id);
+                        $('#commentBox').val("");
+                        $('#CommentBtnGroup').attr("hidden", true);
+                        // return fetchComments();
+                        $('#staticCommentRow' + i).attr("hidden", false);
+                        console.log(userName + " - " + comment + " - " + Date.now());
+                        $('#staticCommentName+i').html(userName);
+                        $('#staticComment' + i).html(comment);
+                        var options = {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        };
+                        var today = new Date();
+                        var formatToday = today.toLocaleDateString("en-US", options)
+                        $('#staticCommentTime' + i).html(formatToday);
+                        // addComment(comment, userName);
+                    })
+                    .catch(function(error) {
+                        console.error("Error adding document: ", error);
+                    });
+            }
+        });
+
+        $('#LogOutBtn').click(function() {
+            console.log('Log Out clicked');
+            firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+                window.location.replace("/logout ");
+            }).catch(function(error) {
+                // An error happened.
+            });
+        });
+        $('#cancelBtn').focus(function() {
+            $('#CommentBtnGroup').attr("hidden", true);
+        });
+
+        $('input').focus(function() {
+            console.log("focus..");
+            $('#CommentBtnGroup').attr("hidden", false);
+        });
+    </script>
+
+</body>
+
+</html>

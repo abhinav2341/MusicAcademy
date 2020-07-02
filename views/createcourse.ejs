@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="/">
+
+    <title>Music Academy</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/shop-homepage.css" rel="stylesheet">
+    <link href="css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lobster&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/instructor" style="font-family: 'Dancing Script', cursive;">Music Academy</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/createcourse">
+                            Create Course
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <%if(userInfo.firstName!=null){%>
+                            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <%=userInfo.firstName%>
+                            </a>
+                            <%}else{%>
+                                <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Profile
+                                </a>
+                                <%}%>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/profile">My Profile</a>
+                                        <a class="dropdown-item" href="/instructormycourse">My Courses</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="/logout" id="LogOutBtn">Logout</a>
+                                    </div>
+                                    <!-- <button class="btn" id="LogOutBtn">Logout</button> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container" style="min-height: 83vh;">
+        <div class="row" style="height: 10%; width: 100%;padding: 2%;margin-left: 1%;margin-right: 1%;">
+            <div class="row h3" style="width: 100%;margin-top: 2%;">
+                Create Course
+            </div>
+        </div>
+        <div class="row" style="height: 90%;padding: 2%;margin-left: 1%;margin-right: 1%;">
+
+            <form action="/createcoursedb" method="post" style="width: 80%;padding: 2%;">
+                <div class="form-group">
+                    <label for="CourseName">Course Name</label>
+                    <input type="text" name="CourseName" class="form-control" id="CourseName">
+                </div>
+                <div class="form-group">
+                    <label for="InstructorName">Instructor Name</label>
+                    <input type="text" name="InstructorName" class="form-control" id="InstructorName">
+                </div>
+                <div class="form-group">
+                    <label for="CourseDescription">Description</label>
+                    <textarea class="form-control" name="CourseDescription" id="CourseDescription" rows="auto"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="CoursePrerequisite">Course Prerequisite</label>
+                    <textarea class="form-control" name="CoursePrerequisite" id="CoursePrerequisite" rows="auto"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="CourseDuration">Course Duration</label>
+                    <input type="text" class="form-control" name="CourseDuration" id="CourseDuration" placeholder="in hours..">
+                </div>
+                <div class="form-group">
+                    <label for="CoursePrice">Course Price</label>
+                    <input type="text" class="form-control" name="CoursePrice" id="CoursePrice" placeholder="in rupees">
+                </div>
+                <div class="form-group">
+                    <label for="CourseDifficulty">Course Difficulty</label>
+                    <select class="form-control" name="CourseDifficulty" id="CourseDifficulty">
+                    <option value="basic">Basic</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                    <label for="CourseLanguage">Course Language</label>
+                    <select class="form-control" name="CourseLanguage" id="CourseLanguage">
+                        <option value="Afrikaans">Afrikaans</option>
+                        <option value="Albanian">Albanian</option>
+                        <option value="Arabic">Arabic</option>
+                        <option value="Armenian">Armenian</option>
+                        <option value="Basque">Basque</option>
+                        <option value="Bengali">Bengali</option>
+                        <option value="Bulgarian">Bulgarian</option>
+                        <option value="Catalan">Catalan</option>
+                        <option value="Cambodian">Cambodian</option>
+                        <option value="Chinese (Mandarin)">Chinese (Mandarin)</option>
+                        <option value="Croatian">Croatian</option>
+                        <option value="Czech">Czech</option>
+                        <option value="Danish">Danish</option>
+                        <option value="Dutch">Dutch</option>
+                        <option value="English" selected>English</option>
+                        <option value="Estonian">Estonian</option>
+                        <option value="Fiji">Fiji</option>
+                        <option value="Finnish">Finnish</option>
+                        <option value="French">French</option>
+                        <option value="Georgian">Georgian</option>
+                        <option value="German">German</option>
+                        <option value="Greek">Greek</option>
+                        <option value="Gujarati">Gujarati</option>
+                        <option value="Hebrew">Hebrew</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Hungarian">Hungarian</option>
+                        <option value="Icelandic">Icelandic</option>
+                        <option value="Indonesian">Indonesian</option>
+                        <option value="Irish">Irish</option>
+                        <option value="Italian">Italian</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="Javanese">Javanese</option>
+                        <option value="Korean">Korean</option>
+                        <option value="Latin">Latin</option>
+                        <option value="Latvian">Latvian</option>
+                        <option value="Lithuanian">Lithuanian</option>
+                        <option value="Macedonian">Macedonian</option>
+                        <option value="Malay">Malay</option>
+                        <option value="Malayalam">Malayalam</option>
+                        <option value="Maltese">Maltese</option>
+                        <option value="Maori">Maori</option>
+                        <option value="Marathi">Marathi</option>
+                        <option value="Mongolian">Mongolian</option>
+                        <option value="Nepali">Nepali</option>
+                        <option value="Norwegian">Norwegian</option>
+                        <option value="Persian">Persian</option>
+                        <option value="Polish">Polish</option>
+                        <option value="Portuguese">Portuguese</option>
+                        <option value="Punjabi">Punjabi</option>
+                        <option value="Quechua">Quechua</option>
+                        <option value="Romanian">Romanian</option>
+                        <option value="Russian">Russian</option>
+                        <option value="Samoan">Samoan</option>
+                        <option value="Serbian">Serbian</option>
+                        <option value="Slovak">Slovak</option>
+                        <option value="Slovenian">Slovenian</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="Swahili">Swahili</option>
+                        <option value="Swedish ">Swedish </option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Tatar">Tatar</option>
+                        <option value="Telugu">Telugu</option>
+                        <option value="Thai">Thai</option>
+                        <option value="Tibetan">Tibetan</option>
+                        <option value="Tonga">Tonga</option>
+                        <option value="Turkish">Turkish</option>
+                        <option value="Ukrainian">Ukrainian</option>
+                        <option value="Urdu">Urdu</option>
+                        <option value="Uzbek">Uzbek</option>
+                        <option value="Vietnamese">Vietnamese</option>
+                        <option value="Welsh">Welsh</option>
+                        <option value="Xhosa">Xhosa</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="#">&nbsp;</label>
+                    <input class="btn btn-danger" type="submit" value="Create Course">
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Music Academy 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+
+
+
+    <script>
+        // console.log("index.ejs");
+        var firebaseConfig = {
+            apiKey: "AIzaSyAgBh_SBTl4Wc8ugH2EDchLJRqKnO2dAJI",
+            authDomain: "music-academy-2341.firebaseapp.com",
+            databaseURL: "https://music-academy-2341.firebaseio.com",
+            projectId: "music-academy-2341",
+            storageBucket: "music-academy-2341.appspot.com",
+            messagingSenderId: "379322040304",
+            appId: "1:379322040304:web:e171f5a89796acc871e735",
+            measurementId: "G-2MHG9QDRM3"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        $('#LogOutBtn').click(function() {
+            console.log('Log Out clicked');
+
+            firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+            }).catch(function(error) {
+                // An error happened.
+            });
+
+
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (!user) {
+                    window.location.replace("../");
+                } else {
+                    // User is signed out.
+                    // ...
+                    // res.send("Error signinig in");
+                }
+            });
+
+        })
+    </script>
+
+</body>
+
+</html>

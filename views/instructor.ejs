@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="/">
+
+    <title>Music Academy</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/shop-homepage.css" rel="stylesheet">
+    <link href="css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lobster&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/instructor" style="font-family: 'Dancing Script', cursive;">Music Academy</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/createcourse">
+                            Create Course
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <%if(userInfo.firstName!=null){%>
+                            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <%=userInfo.firstName%>
+                            </a>
+                            <%}else{%>
+                                <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Profile
+                                </a>
+                                <%}%>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/profile">My Profile</a>
+                                        <a class="dropdown-item" href="/instructormycourse">My Courses</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="/logout" id="LogOutBtn">Logout</a>
+                                    </div>
+                                    <!-- <button class="btn" id="LogOutBtn">Logout</button> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container" style="min-height: 83vh;">
+        <div class="row" style="height: 20%;">
+            <div class="col col-lg-3 col-md-3">
+                &nbsp;
+            </div>
+            <div class="col col-lg-6 col-md-6" style="text-align: center;padding: 1rem;">
+                &nbsp;
+                <!-- Ads here -->
+            </div>
+            <div class="col col-lg-3 col-md-3">
+                &nbsp;
+            </div>
+
+        </div>
+        <div class="row" style="height: 80%;padding: 4%;">
+            <div class="row text-left" style="margin:1px">
+                <strong>Active Courses</strong>
+            </div>
+            <div class="row">&nbsp;</div>
+            <% if(LiveCourses.length>0){var i=0;%>
+                <div class="row" style="width: 100%; ">
+                    <% LiveCourses.forEach((Course)=>{i++%>
+                        <%var thumbnailUrl=Course.courseInfo.courseThumbnailUrl;%>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="height: 460px;margin-top: 1%;margin-bottom: 1%;">
+                                <div class="card" style="width: 100%; height: 100%;">
+                                    <div class="imageDiv" style="width: 100%; height: 50%;">
+                                        <%if(thumbnailUrl!=null){%>
+                                            <img src="<%=thumbnailUrl%>" class="card-img-top" alt="..." style="height:100%">
+                                            <%}else{%>
+                                                <img src="https://image.flaticon.com/icons/svg/194/194936.svg" class="card-img-top" alt="..." style="height:100%">
+                                                <%}%>
+                                    </div>
+                                    <div class="card-bodyd-flex flex-column" style="height: 50%;padding: 6%;">
+                                        <h5 class="card-title">
+                                            <blockquote class="blockquote">
+                                                <p class="mb-0">
+                                                    <%var name=Course.courseInfo.courseName;%>
+                                                        <%if (name.length > 20) {%>
+                                                            <%name = name.substr(0, 20) + '...';%>
+                                                                <%}%>
+                                                                    <%= name %>
+                                                </p>
+                                                <footer class="blockquote-footer">
+                                                    <%= Course.courseInfo.instructorName;%>
+                                                </footer>
+                                            </blockquote>
+
+                                        </h5>
+                                        <p class="card-text">
+                                            <span>&nbsp;</span></br>
+                                            <span>
+                                            <%var desc=Course.courseInfo.courseDescription%>
+                                            <%if (desc.length > 50) {%>
+                                                <%desc = desc.substr(0, 50) + '...';%>
+                                            <%}%>
+                                            <%= desc %> 
+                                        </span>
+                                            </br>
+                                            <strong>Rs <%= Course.courseInfo.coursePrice %></strong>
+                                        </p>
+                                        <div class="card-text" style="margin-bottom:2%;">
+                                            <a href="./stoplive/<%= Course.courseid %>" class="btn btn-danger card-footer" style="background-color: red!important;">Stop Live</a>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="card-footer ">
+                                        
+                                    </div> -->
+                                </div>
+                            </div>
+                            <%if(i%3==0){%>
+                </div>
+                <div class="row" style="width: 100%; margin-top: 1%;">
+                    <%}%>
+                        <% }); %>
+                </div>
+                <% }else{%>
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                    <div class="row" style="width: 100%;padding-left: 1%;">
+                        <p>No Active Courses</p>
+                    </div>
+                    <%}%>
+                        <!-- <div class="row" style="width: 100%;">
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="width: 100%;">
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Music Academy 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+
+
+
+    <script>
+        // console.log("index.ejs");
+        var firebaseConfig = {
+            apiKey: "AIzaSyAgBh_SBTl4Wc8ugH2EDchLJRqKnO2dAJI",
+            authDomain: "music-academy-2341.firebaseapp.com",
+            databaseURL: "https://music-academy-2341.firebaseio.com",
+            projectId: "music-academy-2341",
+            storageBucket: "music-academy-2341.appspot.com",
+            messagingSenderId: "379322040304",
+            appId: "1:379322040304:web:e171f5a89796acc871e735",
+            measurementId: "G-2MHG9QDRM3"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        $('#LogOutBtn').click(function() {
+            console.log('Log Out clicked');
+            firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+                window.location.replace("/logout");
+            }).catch(function(error) {
+                // An error happened.
+            });
+        })
+    </script>
+
+</body>
+
+</html>

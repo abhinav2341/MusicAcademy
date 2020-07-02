@@ -1,0 +1,606 @@
+<!-- page for adding lesson to course or update -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="/">
+
+    <title>Music Academy</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/shop-homepage.css" rel="stylesheet">
+    <!-- <link href="css/argon-design-system.css?v=1.2.0" rel="stylesheet" /> -->
+    <link href="fontawesome-free/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lobster&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/instructor" style="font-family: 'Dancing Script', cursive;">Music Academy</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/createcourse">
+                            Create Course
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <%if(user.userInfo.firstName!=null){%>
+                            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <%=user.userInfo.firstName%>
+                            </a>
+                            <%}else{%>
+                                <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Profile
+                                </a>
+                                <%}%>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/profile">My Profile</a>
+                                        <a class="dropdown-item" href="/instructormycourse">My Courses</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="/logout" id="LogOutBtn">Logout</a>
+                                    </div>
+                                    <!-- <button class="btn" id="LogOutBtn">Logout</button> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Fluid jumbotron</h1>
+            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+        </div>
+    </div> -->
+    <!-- Page Content -->
+    <div class="container" style="min-height: 83vh; margin-bottom: 5%;">
+        <div class="row" style="height: 10%; width: 100%; background-color: white;">
+            <div class="col col-lg-8 col-md-8">
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row display-3" style="width: 100%;">
+                    <%= courseInfo.courseName %>
+                </div>
+                <div class="row lead" style="width: 100%;padding-left: 1%;text-align: justify;">
+                    <%= courseInfo.courseDescription %>
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row h4" style="width: 100%;">
+                    <small>Created By: <u><%= courseInfo.instructorName %></u></small>
+                </div>
+                <div class="row h4" style="width: 100%;">
+                    <div class="col col-lg-6 col-md-6 text-left" style="padding: 0px;">
+                        <span class="text-left"><small>Language: <em><%= courseInfo.courseLanguage %></em></small></span>
+                    </div>
+                    <div class="col col-lg-6 col-md-6 text-right">
+                        <span class="text-right"><small>Price: <em>&#8377 <%= courseInfo.coursePrice %></em></small></span>
+                    </div>
+                </div>
+                <div class="row h4" style="width: 100%;">
+                    <div class="col col-lg-6 col-md-6 text-left" style="padding: 0px;">
+                        <span class="text-left"><small>Difficulty: <em><%= courseInfo.courseDifficulty %></em></small></span>
+                    </div>
+                    <div class="col col-lg-6 col-md-6 text-right">
+                        <span class="text-right"><small>Duration: <em><%= courseInfo.courseDuration %> hrs</em></small></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row">
+                    <a data-toggle="modal" data-target="#EditCourseModal" id="EditCourseLink"><i class="far fa-edit fa-sm">Edit Course </i></a>
+                    <span>&nbsp;</span>
+                    <a id="uploadLink" data-toggle="modal" data-target="#AddThumbnailModal"><i class="far fa-edit  ">Thumbnail</i></a>
+                </div>
+            </div>
+            <div class="col col-lg-4 col-md-4" style="text-align: center;padding: 1rem;">
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
+                <%if(courseInfo.courseThumbnailUrl!=null){%>
+                    <div class="row">
+                        <img src="<%=courseInfo.courseThumbnailUrl%>" alt="image here" class="img-thumbnail" style="max-width:80%;width: 100%;">
+                    </div>
+                    <%}else{%>
+                        <div class="row">
+                            <img src="https://image.flaticon.com/icons/svg/194/194936.svg" alt="image here" class="img-thumbnail" style="width: 100%">
+                        </div>
+                        <%}%>
+            </div>
+        </div>
+        <div class="row " style="height: 90%;width: 100% ; margin-top: 2%; ">
+            <div class="col-12  " id="LectureSection ">
+                <div class="row h3 ">
+                    <div class="col-12  text-left " style="padding-left:0px ; ">
+                        Lessons
+                        <button class="btn btn-primary btn-sm " data-toggle="modal" data-target="#AddLessonModal"><i class="fas fa-plus fa-sm "></i></button>
+                    </div>
+
+                </div>
+                <div class="row ">
+                    &nbsp;
+                </div>
+                <% if(lessons.length>0){var j=0;%>
+                    <% lessons.forEach((lesson)=>{j++; %>
+                        <div class="row ">
+                            <div class="card " style="width: 100%;border: none; ">
+                                <div class="card-header " style="border: none; border-radius: 15px;">
+                                    <div class="row ">
+                                        <div class="col col-6 h4 " style="padding: 1%;">
+                                            <div class="row" style="width: 100%;padding-left: 6%;">
+                                                <span id="lessonId<%=j%>" hidden><%=lesson.lessonId%></span>
+                                                <span id="lessonName<%=j%>"><%=lesson.lessonInfo.lessonName%></span>
+                                                <small style="margin-top: 3.5px;padding-left: 4.0px;" class="EditLessonIcon" id="<%=j%>"><i class="far fa-edit fa-xs" data-toggle="modal" data-target="#EditLessonModal"></i></small>
+                                            </div>
+                                            <div class="row" style="width: 100%;padding-left: 8%;font-size: small;">
+
+                                                <small>
+                                                    <span id="noOfLectures<%=j%>"><%=lesson.lessonInfo.noOfLectures%> </span>
+                                                    Lectures
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col col-6 text-right " style="padding-top: 1%;">
+                                            <a class="btn btn-primary " href="/addlecture/<%=courseId%>/<%=lesson.lessonId%>"> Add lecture</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">&nbsp;</div>
+                        <%});}%>
+
+                            <div class="row">
+                                <a href="/golive/<%=courseId%>" class="btn btn-lg btn-danger" type="button" id="GoLiveBtn">Go Live</a>
+                            </div>
+            </div>
+
+            <!-- 
+            <div class="col col-lg-4 col-md-4" style="text-align: center;padding: 1rem;">
+                <!- Below Image --
+            </div> -->
+            <!-- ************************ADD LESSON MODAL****************************** -->
+            <div class="modal fade" id="AddLessonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Add Lesson</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/addlessondb/<%=courseId%>" id="AddLessonForm">
+                                <div class="form-group">
+                                    <label for="LessonName">Lesson Name</label>
+                                    <input type="text" name="LessonName" class="form-control" id="LessonName" aria-describedby="lessonNameHelp" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Number of Lectures</label>
+                                    <input type="number" step="1" min="1" name="NumberOfLectures" class="form-control" id="NumberOfLectures" required>
+                                </div>
+                                <div class="form-group">
+                                    <strong id="res"></strong>
+                                </div>
+
+                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="AddLessonBtn">Add</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ************************ADD Thumbnail MODAL****************************** -->
+            <div class="modal fade" id="AddThumbnailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Add Thumbnail</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="/addcoursethumbnaildb/<%-courseId%>" id="AddThumbnailForm">
+                                <div class="form-group">
+                                    <input type="hidden" id="thumbnailUrl" name="thumbnailUrl" class="form-control">
+                                    <!-- <input type="hidden" name="LectureName" class="form-control" id="LectureName" aria-describedby="LectureNameHelp" required> -->
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="coursethumbnail">Thumbnail</label></br>
+                                    <input type="file" id="uploadFile" name="coursethumbnail " accept="image/* ">
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="progress" hidden>
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <strong id="res"></strong>
+                                </div>
+                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="AddThumbnailBtn">Add</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ************************EDIT Course MODAL****************************** -->
+            <div class="modal fade" id="EditCourseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Edit Course</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/editcoursedb" method="post" style="width: 100%;padding: 2%;">
+                                <div class="form-group">
+                                    <input type="hidden" name="CourseId" class="form-control" id="CourseId" value="<%=courseId%>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="CourseName">Course Name</label>
+                                    <input type="text" name="CourseName" class="form-control" id="CourseName" value="<%=courseInfo.courseName%>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="InstructorName">Instructor Name</label>
+                                    <input type="text" name="InstructorName" class="form-control" id="InstructorName" value="<%=courseInfo.instructorName%>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="CourseDescription">Description</label>
+                                    <textarea class="form-control" name="CourseDescription" id="CourseDescription" rows="auto"><%=courseInfo.courseDescription%></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="CourseDuration">Course Duration</label>
+                                    <input type="text" class="form-control" name="CourseDuration" id="CourseDuration" placeholder="in hours.." value="<%=courseInfo.courseDuration%>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="CoursePrice">Course Price</label>
+                                    <input type="text" class="form-control" name="CoursePrice" id="CoursePrice" placeholder="in rupees" value="<%=courseInfo.coursePrice%>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="CourseDifficulty">Course Difficulty</label>
+                                    <select class="form-control" name="CourseDifficulty" id="CourseDifficulty" value="">
+                                    <option value="basic">Basic</option>
+                                    <option value="intermediate">Intermediate</option>
+                                    <option value="Expert">Expert</option>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="CourseLanguage">Course Language</label>
+                                    <select class="form-control" name="CourseLanguage" id="CourseLanguage" value="<%=courseInfo.courseLanguage%>">
+                                        <option value="Afrikaans">Afrikaans</option>
+                                        <option value="Albanian">Albanian</option>
+                                        <option value="Arabic">Arabic</option>
+                                        <option value="Armenian">Armenian</option>
+                                        <option value="Basque">Basque</option>
+                                        <option value="Bengali">Bengali</option>
+                                        <option value="Bulgarian">Bulgarian</option>
+                                        <option value="Catalan">Catalan</option>
+                                        <option value="Cambodian">Cambodian</option>
+                                        <option value="Chinese (Mandarin)">Chinese (Mandarin)</option>
+                                        <option value="Croatian">Croatian</option>
+                                        <option value="Czech">Czech</option>
+                                        <option value="Danish">Danish</option>
+                                        <option value="Dutch">Dutch</option>
+                                        <option value="English">English</option>
+                                        <option value="Estonian">Estonian</option>
+                                        <option value="Fiji">Fiji</option>
+                                        <option value="Finnish">Finnish</option>
+                                        <option value="French">French</option>
+                                        <option value="Georgian">Georgian</option>
+                                        <option value="German">German</option>
+                                        <option value="Greek">Greek</option>
+                                        <option value="Gujarati">Gujarati</option>
+                                        <option value="Hebrew">Hebrew</option>
+                                        <option value="Hindi">Hindi</option>
+                                        <option value="Hungarian">Hungarian</option>
+                                        <option value="Icelandic">Icelandic</option>
+                                        <option value="Indonesian">Indonesian</option>
+                                        <option value="Irish">Irish</option>
+                                        <option value="Italian">Italian</option>
+                                        <option value="Japanese">Japanese</option>
+                                        <option value="Javanese">Javanese</option>
+                                        <option value="Korean">Korean</option>
+                                        <option value="Latin">Latin</option>
+                                        <option value="Latvian">Latvian</option>
+                                        <option value="Lithuanian">Lithuanian</option>
+                                        <option value="Macedonian">Macedonian</option>
+                                        <option value="Malay">Malay</option>
+                                        <option value="Malayalam">Malayalam</option>
+                                        <option value="Maltese">Maltese</option>
+                                        <option value="Maori">Maori</option>
+                                        <option value="Marathi">Marathi</option>
+                                        <option value="Mongolian">Mongolian</option>
+                                        <option value="Nepali">Nepali</option>
+                                        <option value="Norwegian">Norwegian</option>
+                                        <option value="Persian">Persian</option>
+                                        <option value="Polish">Polish</option>
+                                        <option value="Portuguese">Portuguese</option>
+                                        <option value="Punjabi">Punjabi</option>
+                                        <option value="Quechua">Quechua</option>
+                                        <option value="Romanian">Romanian</option>
+                                        <option value="Russian">Russian</option>
+                                        <option value="Samoan">Samoan</option>
+                                        <option value="Serbian">Serbian</option>
+                                        <option value="Slovak">Slovak</option>
+                                        <option value="Slovenian">Slovenian</option>
+                                        <option value="Spanish">Spanish</option>
+                                        <option value="Swahili">Swahili</option>
+                                        <option value="Swedish ">Swedish </option>
+                                        <option value="Tamil">Tamil</option>
+                                        <option value="Tatar">Tatar</option>
+                                        <option value="Telugu">Telugu</option>
+                                        <option value="Thai">Thai</option>
+                                        <option value="Tibetan">Tibetan</option>
+                                        <option value="Tonga">Tonga</option>
+                                        <option value="Turkish">Turkish</option>
+                                        <option value="Ukrainian">Ukrainian</option>
+                                        <option value="Urdu">Urdu</option>
+                                        <option value="Uzbek">Uzbek</option>
+                                        <option value="Vietnamese">Vietnamese</option>
+                                        <option value="Welsh">Welsh</option>
+                                        <option value="Xhosa">Xhosa</option>
+                                    </select>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="EditCourseBtn">Edit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ************************EDIT Lesson MODAL****************************** -->
+            <div class="modal fade" id="EditLessonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Edit Lesson</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/editlessondb/<%=courseId%>" id="AddLessonForm">
+                                <div class="form-group">
+                                    <input type="hidden" name="EditLessonId" class="form-control" id="EditLessonId" aria-describedby="lessonNameHelp" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="LessonName">Lesson Name</label>
+                                    <input type="text" name="EditLessonName" class="form-control" id="EditLessonName" aria-describedby="lessonNameHelp" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Number of Lectures</label>
+                                    <input type="number" step="1" min="1" name="EditNumberOfLectures" class="form-control" id="EditNumberOfLectures" required>
+                                </div>
+                                <div class="form-group">
+                                    <strong id="res"></strong>
+                                </div>
+                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="EditLessonBtn">Edit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Music Academy 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-storage.js"></script>
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+
+    <!-- <script id="form-actions">
+        $('.AddLectureLink').click(function() {
+            console.log('addLecture ');
+            var LessonId = $(this).attr("id");
+            console.log(LessonId);
+            $('#LessonId').val(LessonId);
+            // console.log(LectureLinkId + "Input");
+            // var LessonId = $(LectureLinkId + "Input").val();
+            // console.log("LessonId " + LessonId);
+        });
+    </script> -->
+    <script>
+        // console.log("index.ejs");
+        var firebaseConfig = {
+            apiKey: "AIzaSyAgBh_SBTl4Wc8ugH2EDchLJRqKnO2dAJI",
+            authDomain: "music-academy-2341.firebaseapp.com",
+            databaseURL: "https://music-academy-2341.firebaseio.com",
+            projectId: "music-academy-2341",
+            storageBucket: "music-academy-2341.appspot.com",
+            messagingSenderId: "379322040304",
+            appId: "1:379322040304:web:e171f5a89796acc871e735",
+            measurementId: "G-2MHG9QDRM3"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        $('#uploadFile').change(function() {
+            var file = $(this).prop('files')[0];
+            var storageRef = firebase.storage().ref();
+            var filelocation = 'app/user/instructor/<%-user.uid%>/courses/<%-courseId%>/Images/Thumbnail/' + file.name;
+            $('#AddThumbnailBtn').attr("disabled", true);
+            //upload file
+            var task = storageRef.child(filelocation).put(file);
+            //update progress
+
+
+            task.on('state_changed',
+                function progress(snapshot) {
+
+                    switch (snapshot.state) {
+                        case firebase.storage.TaskState.PAUSED: // or 'paused'
+                            console.log('Upload is paused');
+                            break;
+                        case firebase.storage.TaskState.RUNNING: // or 'running'
+                            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            $(".progress").attr("hidden", false);
+                            $(".progress-bar").css("width", progress + "%");
+                            $(".progress-bar").html(progress.toFixed(1) + "%");
+                            console.log('Upload is ' + progress.toFixed(1) + '% done');
+                            console.log('Upload is running');
+                            break;
+                    }
+                },
+                function(error) {
+
+                    // A full list of error codes is available at
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+                            // User doesn't have permission to access the object
+                            console.log('Unauthorized User Accesing Storage');
+                            break;
+
+                        case 'storage/canceled':
+                            // User canceled the upload
+                            console.log('Upload Canceled');
+                            break;
+                        case 'storage/unknown':
+                            // Unknown error occurred, inspect error.serverResponse
+                            break;
+                    }
+                },
+                function() {
+                    // Upload completed successfully, now we can get the download URL
+                    task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                        console.log('File available at', downloadURL);
+                        $('#thumbnailUrl').val(downloadURL);
+                        $('#AddThumbnailBtn').attr("disabled", false);
+                    });
+                });
+        });
+
+        $('#EditCourseLink').click(function() {
+            var lang = '<%-courseInfo.courseLanguage%>';
+            var difficulty = '<%-courseInfo.courseDifficulty%>'
+            console.log(lang);
+            $('option[value=' + lang + ']').attr('selected', true);
+            $('option[value=' + difficulty + ']').attr('selected', true);
+        });
+
+        $('.EditLessonIcon').click(function() {
+            console.log("EDIT LESSON");
+            var id = $(this).attr("id");
+            console.log("id " + id);
+            var LessonId = $("#lessonId" + id).html();
+            var LessonName = $("#lessonName" + id).html().toUpperCase();
+            var NoOfLectures = Number($("#noOfLectures" + id).html());
+            console.log(NoOfLectures + " LECTURES ");
+            $('#EditLessonId').val(LessonId);
+            $('#EditLessonName').val(LessonName);
+            $('#EditNumberOfLectures').val(NoOfLectures);
+
+        });
+
+        $('#AddThumbnailBtn').click(function() {
+            var thumbnailUrl = $('#thumbnailUrl').val();
+            if (thumbnailUrl != null) {
+                $('#AddThumbnailForm').submit();
+                // console.log(thumbnailUrl);
+                // window.location.replace("./addcoursethumbnaildb/<%-courseId%>/" + thumbnailUrl);
+            }
+        });
+        $('#LogOutBtn').click(function() {
+            console.log('Log Out clicked');
+
+            firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+            }).catch(function(error) {
+                // An error happened.
+            });
+
+            console.log(LiveCourses);
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (!user) {
+                    window.location.replace("../");
+                } else {
+                    // User is signed out.
+                    // ...
+                    // res.send("Error signinig in");
+                }
+            });
+
+        })
+    </script>
+
+</body>
+
+</html>

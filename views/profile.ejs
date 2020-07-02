@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="/">
+
+    <title>Music Academy</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/shop-homepage.css" rel="stylesheet">
+    <link href="css/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lobster&display=swap" rel="stylesheet">
+    <style>
+        .grow {
+            transition: all .2s ease-in-out;
+        }
+        
+        .grow:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/<%=role%>" style="font-family: 'Dancing Script', cursive;">Music Academy</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <%if(firstName!=null){%>
+                            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <%=firstName%>
+                            </a>
+                            <%}else{%>
+                                <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Profile
+                                </a>
+                                <%}%>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/profile">My Profile</a>
+                                        <%if(role=='instructor'){%>
+                                            <a class="dropdown-item" href="/instructormycourse">My Courses</a>
+                                            <%}%>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="/logout" id="LogOutBtn">Logout</a>
+                                    </div>
+                                    <!-- <button class="btn" id="LogOutBtn">Logout</button> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container" style="min-height: 83vh;margin-bottom: 5%;">
+        <div class="row" style="height: 20%;">
+            <div class="col col-lg-3 col-md-3">
+                &nbsp;
+            </div>
+            <div class="col col-lg-6 col-md-6" style="text-align: center;padding: 1rem;">
+                <%if(profilePicUrl!=""){%>
+                    <div class="row" style="margin: 10px auto 20px;display: block;">
+                        <img src="<%=profilePicUrl%>" class="grow" alt="..." style="height: 12em;border-radius: 30%;">
+                        </br>
+                        </br>
+                        <input type="file" id="changePicture" accept="image/*" hidden>
+                    </div>
+                    <%}else{%>
+                        <div class="row" style="margin: 10px auto 20px;display: block;">
+                            <img src="https://image.flaticon.com/icons/svg/194/194936.svg" class="grow" alt="..." style="height: 12em;">
+                            </br>
+                            </br>
+                            <input type="file" id="changePicture" accept="image/*" hidden>
+                        </div>
+                        <%}%>
+            </div>
+            <div class="col col-lg-3 col-md-3">
+                &nbsp;
+            </div>
+
+        </div>
+        <div class="row" style="height: 80%;">
+            <div class="row" style="padding:10%;height:100%;width: 100%;">
+                <form class="ProfileForm" action="/updateprofile" method="POST" style="height:100%;width: 100%;">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName">First name</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name" value="<%=firstName%>" disabled required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="lastName">Last name</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name" value="<%=lastName%>" disabled>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <label for="email">E-mail</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="@xyz.com" value="<%=email%>" disabled required>
+                            <div class="invalid-feedback">
+                                Please provide a valid email.
+                            </div>
+                        </div>
+
+                    </div>
+                    <button class="btn btn-primary" type="button" id="EditProfileBtn">Edit Profile</button>
+                    <button class="btn btn-primary" type="submit" id="SubmitProfileBtn" hidden>Submit</button>
+                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#ChangePasswordModal">Change Password</button>
+                </form>
+
+
+                <!-- <div class="col col-lg-4 col-md-4">
+                                &nbsp;
+                            </div> -->
+            </div>
+
+            <!-- Change Password Modal -->
+            <div class="modal fade" id="ChangePasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Change Password</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="/changepassword" id="ChangePasswordForm">
+                                <div class="form-group">
+                                    <label for="CurrentPassword">Current Password</label></br>
+                                    <input type="password" class="form-control" id="CurrentPassword" name="CurrentPassword" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="NewPassword">New Password</label></br>
+                                    <input type="password" class="form-control" id="NewPassword" name="NewPassword" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <strong id="res"></strong>
+                                </div>
+                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="ChangePasswordBtn">Change</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UploadProfilePictureModal -->
+            <div class="modal fade" id="UploadProfilePictureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Upload Profile Picture</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="/uploadprofilepic" id="UploadProfilePictureForm">
+                                <div class="form-group">
+                                    <input type="hidden" id="profilePicUrl" name="profilePicUrl" class="form-control">
+                                    <!-- <input type="hidden" name="LectureName" class="form-control" id="LectureName" aria-describedby="LectureNameHelp" required> -->
+                                </div>
+
+                                <div class="progress" hidden>
+                                    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <strong id="res"></strong>
+                                </div>
+                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="UploadProfilePictureBtn">Change</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /.container -->
+
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Music Academy 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-storage.js"></script>
+
+
+    <script>
+        // console.log("index.ejs");
+        var firebaseConfig = {
+            apiKey: "AIzaSyAgBh_SBTl4Wc8ugH2EDchLJRqKnO2dAJI",
+            authDomain: "music-academy-2341.firebaseapp.com",
+            databaseURL: "https://music-academy-2341.firebaseio.com",
+            projectId: "music-academy-2341",
+            storageBucket: "music-academy-2341.appspot.com",
+            messagingSenderId: "379322040304",
+            appId: "1:379322040304:web:e171f5a89796acc871e735",
+            measurementId: "G-2MHG9QDRM3"
+        };
+        // Initialize Firebase
+
+        firebase.initializeApp(firebaseConfig);
+
+        $("img").click(function() {
+            $('#changePicture').click();
+        });
+
+        $('#changePicture').change(function() {
+            var file = $(this).prop('files')[0];
+            var storageRef = firebase.storage().ref();
+            var filelocation = 'app/user/student/<%-uid%>/Images/Profile/' + file.name;
+            $('#UploadProfilePictureModal').modal('show');
+            $('#UploadProfilePictureBtn').attr('disabled', true);
+            //upload file
+            var task = storageRef.child(filelocation).put(file);
+            //update progress
+
+
+            task.on('state_changed',
+                function progress(snapshot) {
+
+                    switch (snapshot.state) {
+                        case firebase.storage.TaskState.PAUSED: // or 'paused'
+                            console.log('Upload is paused');
+                            break;
+                        case firebase.storage.TaskState.RUNNING: // or 'running'
+                            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            $(".progress").attr("hidden", false);
+                            $(".progress-bar").css("width", progress + "%");
+                            $(".progress-bar").html(progress.toFixed(1) + "%");
+                            console.log('Upload is ' + progress.toFixed(1) + '% done');
+                            console.log('Upload is running');
+                            break;
+                    }
+                },
+                function(error) {
+
+                    // A full list of error codes is available at
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+                            // User doesn't have permission to access the object
+                            console.log('Unauthorized User Accesing Storage');
+                            break;
+
+                        case 'storage/canceled':
+                            // User canceled the upload
+                            console.log('Upload Canceled');
+                            break;
+                        case 'storage/unknown':
+                            // Unknown error occurred, inspect error.serverResponse
+                            break;
+                    }
+                },
+                function() {
+                    // Upload completed successfully, now we can get the download URL
+                    task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                        console.log('File available at', downloadURL);
+                        $('#profilePicUrl').val(downloadURL);
+                        $('#UploadProfilePictureBtn').attr("disabled", false);
+                    });
+                });
+        });
+
+
+        $('#EditProfileBtn').click(function() {
+            $('input').attr('disabled', false);
+            $(this).attr("hidden", true);
+            $('#SubmitProfileBtn').attr("hidden", false);
+        });
+        $('#LogOutBtn').click(function() {
+            console.log('Log Out clicked');
+            firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+                window.location.replace("/logout");
+            }).catch(function(error) {
+                // An error happened.
+            });
+        })
+    </script>
+
+</body>
+
+</html>

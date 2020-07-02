@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="/">
+
+    <title>Music Academy</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/shop-homepage.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lobster&display=swap" rel="stylesheet">
+
+
+    <style>
+        .grow {
+            transition: all .2s ease-in-out;
+        }
+        
+        .grow:hover {
+            transform: scale(1.1);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/" style="font-family: 'Dancing Script', cursive;">Music Academy</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <button class="btn" data-toggle="modal" data-target="#Signup">Sign up</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn" data-toggle="modal" data-target="#Login">Login</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container" style="min-height: 83vh;">
+        <div class="row display-4" style="height: 20%; font-family: 'Lobster', cursive;padding-top: 2%;">
+            <div class="col-lg-4">
+                &nbsp;
+            </div>
+            <div class="col-lg-4 text-center">
+                Recently Added Courses
+            </div>
+            <div class="col-lg-4">
+                &nbsp;
+            </div>
+        </div>
+
+        <div class="row" style="height: 80%;padding: 4%;">
+            <% if(LiveCourses.length>0){var i=0;%>
+                <div class="row" style="width: 100%; ">
+                    <% LiveCourses.forEach((Course)=>{i++%>
+                        <%var thumbnailUrl=Course.courseInfo.courseThumbnailUrl;%>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="height: 460px;margin-top: 1%;margin-bottom: 1%;padding: 3%;">
+                                <div class="card grow" style="width: 95%; height: 100%;">
+                                    <div class="imageDiv" style="width: 100%; height: 50%;">
+                                        <%if(thumbnailUrl!=null){%>
+                                            <img src="<%=thumbnailUrl%>" class="card-img-top" alt="..." style="height:100%">
+                                            <%}else{%>
+                                                <img src="https://image.flaticon.com/icons/svg/194/194936.svg" class="card-img-top" alt="..." style="height:100%">
+                                                <%}%>
+                                    </div>
+                                    <div class="card-bodyd-flex flex-column" style="height: 50%;padding: 6%;">
+                                        <h5 class="card-title">
+                                            <blockquote class="blockquote">
+                                                <p class="mb-0">
+                                                    <%var name=Course.courseInfo.courseName;%>
+                                                        <%if (name.length > 20) {%>
+                                                            <%name = name.substr(0, 20) + '...';%>
+                                                                <%}%>
+                                                                    <%= name %>
+                                                </p>
+                                                <footer class="blockquote-footer">
+                                                    <%= Course.courseInfo.instructorName;%>
+                                                </footer>
+                                            </blockquote>
+
+                                        </h5>
+                                        <p class="card-text">
+                                            <span>&nbsp;</span></br>
+                                            <span>
+                                            <%var desc=Course.courseInfo.courseDescription%>
+                                            <%if (desc.length > 50) {%>
+                                                <%desc = desc.substr(0, 50) + '...';%>
+                                            <%}%>
+                                            <%= desc %> 
+                                        </span>
+                                            </br>
+                                            <strong>Rs <%= Course.courseInfo.coursePrice %></strong>
+                                        </p>
+                                    </div>
+                                    <!-- <div class="card-footer ">
+                                        
+                                    </div> -->
+                                </div>
+                            </div>
+                            <%if(i%3==0){%>
+                </div>
+                <div class="row" style="width: 100%; margin-top: 1%;">
+                    <%}%>
+                        <% }); %>
+                </div>
+                <% }else{%>
+                    <div class="row">
+                        <h3>No Live Courses</h3>
+                    </div>
+                    <%}%>
+                        <!-- <div class="row" style="width: 100%;">
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="width: 100%;">
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-4 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+
+        <!-- /.row -->
+
+
+        <!-- Login modal -->
+        <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/login2" method="post" id="LogInForm">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" name="LoginEmail" id="LoginEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" name="LoginPassword" id="LoginPassword" placeholder="Password" required>
+                            </div>
+                            <div class="form-group">
+                                <strong id="Loginres"></strong>
+                            </div>
+                            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="LoginBtn">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- signup modal -->
+        <div class="modal fade" id="Signup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Sign Up</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/signup2" id="SignUpForm">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" name="signupEmail" class="form-control" id="SignUpEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" name="signupPass" class="form-control" id="SignUpPassword" placeholder="Password" required>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="role" id="inlineRadio1" value="Instructor" checked>
+                                <label class="form-check-label" for="inlineRadio1">Instructor</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="role" id="inlineRadio2" value="Student">
+                                <label class="form-check-label" for="inlineRadio2">Student</label>
+                            </div>
+                            <div class="form-group">
+                                <strong id="res"></strong>
+                            </div>
+
+                            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="SignUpBtn">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Music Academy 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+
+
+    <script>
+        // console.log("index.ejs");
+        var firebaseConfig = {
+            apiKey: "AIzaSyAgBh_SBTl4Wc8ugH2EDchLJRqKnO2dAJI",
+            authDomain: "music-academy-2341.firebaseapp.com",
+            databaseURL: "https://music-academy-2341.firebaseio.com",
+            projectId: "music-academy-2341",
+            storageBucket: "music-academy-2341.appspot.com",
+            messagingSenderId: "379322040304",
+            appId: "1:379322040304:web:e171f5a89796acc871e735",
+            measurementId: "G-2MHG9QDRM3"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function validateEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+        $('#SignUpBtn').click(function() {
+            console.log('sign up clicked');
+            $('#SignUpForm').submit();
+
+        });
+        $('#LoginBtn').click(function() {
+            console.log('login clicked................');
+            $('#LogInForm').submit();
+        })
+    </script>
+
+</body>
+
+</html>
